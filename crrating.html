@@ -163,17 +163,20 @@
         var cells = rows.selectAll('td')
             .data(function(row) {
                 return data.columns.map(function (column) {
-                    return { column: column, value: row[column] }
+                    if (row[column].length === 0 || isNaN(Math.ceil(row[column]))) {
+                        return { column: column, value: row[column] }
+                    }
+                    return { column: column, value: Math.ceil(row[column]) }
             })
         })
         .enter()
         .append('td')
         .text(function (d) { return d.value })
     }
-    d3.csv("https://gist.githubusercontent.com/ADmitri42/9919387583e26cd73fd16a4c7c5a163b/raw/d23186400ad18e2691b1edae3897f703c3984cce/cluster_A.csv").then(function(data) {renderTable(data, "clusterATable")});
-    d3.csv("https://gist.githubusercontent.com/ADmitri42/9919387583e26cd73fd16a4c7c5a163b/raw/d23186400ad18e2691b1edae3897f703c3984cce/cluster_B.csv").then(function(data) {renderTable(data, "clusterBTable")});
-    d3.csv("https://gist.githubusercontent.com/ADmitri42/9919387583e26cd73fd16a4c7c5a163b/raw/d23186400ad18e2691b1edae3897f703c3984cce/cluster_C.csv").then(function(data) {renderTable(data, "clusterCTable")});
-    d3.csv("https://gist.githubusercontent.com/ADmitri42/9919387583e26cd73fd16a4c7c5a163b/raw/d23186400ad18e2691b1edae3897f703c3984cce/cluster_F.csv").then(function(data) {renderTable(data, "clusterFTable")});
+    d3.csv("data/cluster_A.csv").then(function(data) {renderTable(data, "clusterATable")});
+    d3.csv("data/cluster_B.csv").then(function(data) {renderTable(data, "clusterBTable")});
+    d3.csv("data/cluster_C.csv").then(function(data) {renderTable(data, "clusterCTable")});
+    d3.csv("data/cluster_F.csv").then(function(data) {renderTable(data, "clusterFTable")});
     
     // data.then(function(data) {renderTable(dataB, "clusterBTable")});
     // data.then(function(data) {renderTable(dataC, "clusterCTable")});
